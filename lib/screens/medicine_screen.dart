@@ -3,6 +3,7 @@ import '../theme/app_colors.dart';
 import '../services/firestore_service.dart';
 import '../models/medicine.dart';
 import 'cart.dart';
+import '../services/cart_service.dart';
 
 class MedicineScreen extends StatelessWidget {
   const MedicineScreen({super.key});
@@ -110,19 +111,38 @@ class MedicineScreen extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: AppColors.accent.withValues(alpha: 0.3),
+                                color:
+                                    AppColors.accent.withValues(alpha: 0.3),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(med.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600)),
-                          const SizedBox(height: 4),
-                          Text('UGX ${med.price.toStringAsFixed(0)}',
                               style: const TextStyle(
-                                  color: AppColors.textSecondary)),
+                                  fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('UGX ${med.price.toStringAsFixed(0)}',
+                                  style: const TextStyle(
+                                      color: AppColors.textSecondary)),
+                              GestureDetector(
+                                onTap: () => CartService.instance
+                                    .addItem(med.id, med.name, med.price),
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primaryDark,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(Icons.add,
+                                      color: Colors.white, size: 16),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     );
