@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -56,7 +47,6 @@ class DefaultFirebaseOptions {
     projectId: 'medigo-1e8f1',
     storageBucket: 'medigo-1e8f1.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyABCWcgxf1TqvN0cAHZRZHJ_btNclaQ7tI',
     appId: '1:292409766433:ios:6d851e292631978f6a6960',
@@ -64,5 +54,33 @@ class DefaultFirebaseOptions {
     projectId: 'medigo-1e8f1',
     storageBucket: 'medigo-1e8f1.firebasestorage.app',
     iosBundleId: 'com.example.medigo',
+  );
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyComuRmFnAJHmPgQsXKZsI6ZPd3C_p5194',
+    appId: '1:292409766433:web:621fd462096b7d8c6a6960',
+    messagingSenderId: '292409766433',
+    projectId: 'medigo-1e8f1',
+    authDomain: 'medigo-1e8f1.firebaseapp.com',
+    storageBucket: 'medigo-1e8f1.firebasestorage.app',
+    measurementId: 'G-TXBCDXPY91',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyABCWcgxf1TqvN0cAHZRZHJ_btNclaQ7tI',
+    appId: '1:292409766433:ios:6d851e292631978f6a6960',
+    messagingSenderId: '292409766433',
+    projectId: 'medigo-1e8f1',
+    storageBucket: 'medigo-1e8f1.firebasestorage.app',
+    iosBundleId: 'com.example.medigo',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyComuRmFnAJHmPgQsXKZsI6ZPd3C_p5194',
+    appId: '1:292409766433:web:f9f74b88aadcb1f96a6960',
+    messagingSenderId: '292409766433',
+    projectId: 'medigo-1e8f1',
+    authDomain: 'medigo-1e8f1.firebaseapp.com',
+    storageBucket: 'medigo-1e8f1.firebasestorage.app',
+    measurementId: 'G-6H0SJ0X3D5',
   );
 }

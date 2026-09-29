@@ -66,9 +66,13 @@ class HomeScreen extends StatelessWidget {
                 child: StreamBuilder<List<Medicine>>(
                   stream: firestoreService.streamMedicines(),
                   builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     }
+                    
                     final medicines = snapshot.data!;
                     if (medicines.isEmpty) {
                       return const Center(child: Text('No medicines yet'));
@@ -96,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: AppColors.accent.withOpacity(0.3),
+                                    color: AppColors.accent.withValues(alpha: 0.3),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
