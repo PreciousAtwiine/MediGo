@@ -3,6 +3,12 @@
         android:label="medigo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBtFieZf6AHlR9qbdOWkuiLrjRFBlEclKc" />
+        <!-- Optional separate web-service key for Google Routes/Directions.
+             It may be configured independently from the Android Maps SDK key. -->
+             
         <activity
             android:name=".MainActivity"
             android:exported="true"
