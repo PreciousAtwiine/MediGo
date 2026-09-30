@@ -16,22 +16,30 @@ class _SignupScreenState extends State<SignupScreen> {
   final _authService = AuthService();
   bool _isLoading = false;
 
-  Future<void> _signup() async {
-    setState(() => _isLoading = true);
-    try {
-      await _authService.signUpWithEmail(
-        _emailController.text.trim(),
-        _passwordController.text,
-        _nameController.text.trim(),
+Future<void> _signup() async {
+  setState(() => _isLoading = true);
+  try {
+    await _authService.signUpWithEmail(
+      _emailController.text.trim(),
+      _passwordController.text,
+      _nameController.text.trim(),
+    );
+    await _authService.signOut(); // sign out immediately after account creation
+    if (mounted) {
+      Navigator.pop(context); // back to LoginScreen
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Account created! Please log in.')),
       );
-      // Navigation handled automatically by authStateChanges in main.dart
-    } catch (e) {
+    }
+  } catch (e) {
+    if (mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
+  } finally {
+    if (mounted) setState(() => _isLoading = false);
   }
+}
 
   @override
   Widget build(BuildContext context) {

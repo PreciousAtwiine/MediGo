@@ -15,13 +15,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _authService = AuthService();
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   Future<void> _login() async {
     setState(() => _isLoading = true);
     try {
       await _authService.signInWithEmail(
           _emailController.text.trim(), _passwordController.text);
-      // Navigation handled automatically by authStateChanges in main.dart
+      if (mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     } catch (e) {
       _showError(e.toString());
     } finally {
@@ -33,6 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     try {
       await _authService.signInWithGoogle();
+      if (mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     } catch (e) {
       _showError(e.toString());
     } finally {
@@ -44,6 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     try {
       await _authService.signInWithApple();
+      if (mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     } catch (e) {
       _showError(e.toString());
     } finally {
@@ -84,8 +93,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: AppColors.textSecondary,
+                    ),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
+                  ),
+                ),
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -107,7 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(child: Divider(color: AppColors.divider)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text('or', style: TextStyle(color: AppColors.textSecondary)),
+                    child: Text('or',
+                        style: TextStyle(color: AppColors.textSecondary)),
                   ),
                   Expanded(child: Divider(color: AppColors.divider)),
                 ],

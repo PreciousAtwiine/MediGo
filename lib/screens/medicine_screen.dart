@@ -95,7 +95,7 @@ class MedicineScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.85,
                   ),
                   itemBuilder: (context, index) {
                     final med = medicines[index];
@@ -108,13 +108,11 @@ class MedicineScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color:
-                                    AppColors.accent.withValues(alpha: 0.3),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                          Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: AppColors.accent.withValues(alpha: 0.3),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           const SizedBox(height: 8),
